@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delta Ltd · TraceConverge fixture (consent-gated)</title>
+
+  <!-- IMPORTANT: do NOT paste the GTM snippet directly here in the head.
+       This fixture intentionally injects GTM ONLY AFTER the operator clicks
+       "Accept" on the cookie banner. The injection script is at the bottom
+       of the body. This mimics consent-mode-gated analytics setups. -->
+
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 4rem auto; padding: 0 1rem; color: #1f2937; line-height: 1.6; }
+    h1 { color: #2563eb; }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; background: #dbeafe; color: #1e40af; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; }
+    .marker { background: #fef3c7; padding: 0.75rem 1rem; border-left: 4px solid #f59e0b; font-family: ui-monospace, monospace; font-size: 0.875rem; }
+    #cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #1e293b; color: white; padding: 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+    #cookie-banner button {
+      background: #2563eb; color: white; border: 0;
+      padding: 0.5rem 1rem; border-radius: 0.25rem; cursor: pointer; margin-left: 1rem;
+    }
+    #cookie-banner button.reject { background: #475569; }
+    #status { margin-top: 1rem; padding: 0.5rem 1rem; background: #f1f5f9; border-radius: 0.25rem; color: #475569; font-family: ui-monospace, monospace; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <span class="badge">DELTA LTD · CONSENT-GATED</span>
+  <h1>Delta Ltd</h1>
+  <p>Consent-gated fixture for Delta Ltd. Analytics injection (GTM or direct gtag.js) only runs after the user clicks "Accept" on the cookie banner. Use it to test how Discovery handles consent-mode-style setups where tags don't load until consent is granted.</p>
+
+  <p class="marker">Edit the script below: replace <code>__GTM_CONTAINER_ID__</code> with your real GTM container ID. The banner appears on every fresh load (no cookie set) so the consent state is reproducible across tests.</p>
+
+  <div id="status">Status: GTM not loaded · awaiting consent</div>
+
+  <div id="cookie-banner">
+    <span>This site uses cookies for analytics. Accept to allow GTM to load.</span>
+    <div>
+      <button class="reject" onclick="document.getElementById('cookie-banner').remove(); document.getElementById('status').textContent='Status: rejected · GTM will not load';">Reject</button>
+      <button onclick="acceptCookies()">Accept</button>
+    </div>
+  </div>
+
+  <script>
+    function acceptCookies() {
+      document.getElementById('cookie-banner').remove();
+      document.getElementById('status').textContent = 'Status: accepted · GTM injected';
+      var GTM_ID = 'GTM-WD9RGZ73';
+      if (GTM_ID === '__GTM_CONTAINER_ID__' || !GTM_ID) return;
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+        j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
+    }
+  </script>
+</body>
+</html>
